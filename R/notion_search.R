@@ -34,10 +34,10 @@ notion_search <- function(query = NULL, sort = NULL, filter = NULL,
   ## scalar
   query <- query %|null|% assertive.types::assert_is_a_string(query)
   start_cursor <- start_cursor %|null|% assertive.types::assert_is_a_string(start_cursor)
-  page_size <- page_size %|null|% assertive.types::assert_is_an_integer(page_size)
+  page_size <- page_size %|null|% (assertive.types::assert_is_a_number(page_size) |> as.integer())
 
   ## object
-  sort <- sort %|null|% validate_checkpoint(sort)
+  sort <- sort %|null|% (validate_notion_sort(sort, fromSearchAPI = TRUE) |> un_RNO())
   filter <- filter %|null|% validate_checkpoint(filter)
 
   # Coerce argument into a list
@@ -46,16 +46,17 @@ notion_search <- function(query = NULL, sort = NULL, filter = NULL,
     start_cursor, page_size, ...
   ) |> rlist::list.clean()
 
+  #print(str(args))
+  #return(args)
+
   #print(args)
   Sys.sleep(api_rate_limited)
 
   #Result
   result <- httr::POST("https://api.notion.com/v1/search",
     notion_header(),
-    body = jsonlite::toJSON(args,auto_unbox = TRUE),
+    body = jsonlite::toJSON(args, auto_unbox = TRUE),
     encode = "raw")
   httr::stop_for_status(result)
 
 }
-
-

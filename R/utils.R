@@ -20,11 +20,11 @@
 # class(x) <- "NULL"
 # str(x)
 
-# add_checkpoint <- function(x, clean_null = TRUE){
-#   attr(x, "notion_check") <- TRUE
-#   if(clean_null) return(rlist::list.clean(x))
-#   else x
-# }
+add_checkpoint <- function(x, clean_null = TRUE){
+  attr(x, "notion_check") <- TRUE
+  if(clean_null) return(rlist::list.clean(x))
+  else x
+}
 
 parse_result <- function(... , clean_null = TRUE){
   x <- tibble::lst(...)
@@ -40,3 +40,8 @@ validate_checkpoint <- function(x){
   }
   x
 }
+
+un_RNO <- function(x){
+  as.list(vec_data(x))
+}
+

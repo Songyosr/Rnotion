@@ -21,12 +21,15 @@ Imports:
     jsonlite,
     latex2exp,
     magrittr,
+    methods,
     rlist,
     stats,
     tibble,
     tidyr,
     utils,
-    vctrs
+    zeallot
 Suggests: 
     RefManageR,
     bibtex
+Depends: 
+    vctrs
