@@ -11,42 +11,25 @@ methods::setOldClass(c("notion_filter", "vctrs_vctr"))
 filter_ref <- read.csv("data/property_filter_reference.csv")
 
 # Create basic property ---------------------------------------------------
-# text_filter <- function(equals = NULL,  does_not_equal = NULL,
-#                         contains  = NULL,
-#                         does_not_contain = NULL,
-#                         starts_with = NULL,
-#                         ends_with = NULL,
-#                         is_empty = NULL,
-#                         is_not_empty = NULL,
-# )
 
-validate_a_filter_condition <- \(x, un_RNO) {#..., type){
-
-  property <- field(x, "property")
-  type <- field(x, "type")
-  condition <- field(x, "condition")
-
+validate_a_filter_condition <- \(property, type, condition) {
   assertive.properties::assert_is_scalar(condition)
   filter_ref <- filter_ref[filter_ref$group == type, "Property"]
   inside_list <- names(condition)
-  check <-  names(condition) %in% filter_ref
-  if(!check) {
-    stop("Property '",  names(condition[!check]),
-         "' does not exists filter type['",type,"']",
-         "\n [i] Please review: \nhttps://developers.notion.com/reference/post-database-query#post-database-query-filter")
+  check <- names(condition) %in% filter_ref
+  if (!check) {
+    stop(
+      "Property '", names(condition[!check]),
+      "' does not exists filter type['", type, "']",
+      "\n [i] Please review: \nhttps://developers.notion.com/reference/post-database-query#post-database-query-filter"
+    )
   }
-  #print(str(condition))
-
-  if(un_RNO) {
-    result <- list(property = property, type = type, condition[[1]])
-    names(result)[3] <- inside_list
-    return(result)
-  }
-  x
+  # x
 }
 
 validate_filter_conditions <- \(x, un_RNO = FALSE) {
 
+  # check overall class
   if (tmp <- !assertive.types::is_inherited_from(x, "notion_filter")) {
     warning(
       attr(tmp, "cause"),
@@ -54,19 +37,22 @@ validate_filter_conditions <- \(x, un_RNO = FALSE) {
     )
   }
 
-  #type <- field(x, "type")
-  #condition <- field(x, "condition")
+  # Extract data
+  c(property, type, condition) %<-% unclass(x)
+  # property <- field(x, "property")
+  # type <- field(x, "type")
+  # condition <- field(x, "condition")
 
-#  str(type)
-#  str(condition)
-
-  # lapply(seq_along(x), \(i){
-  #   validate_a_filter_condition(condition[i], type = type[i])
-  # })
-  y <- lapply(x, validate_a_filter_condition, un_RNO = un_RNO)
-  str(y)
-
-  #return(x)
+  # Check each element
+  lapply(
+    seq_along(x),
+    function(i) {
+      validate_a_filter_condition(
+        property[i], type[i], condition[i]
+      )
+    }
+  )
+  x
 }
 # Core function -----------------------------------------------------------
 new_filter_notion <- function(property = character(),
@@ -74,8 +60,8 @@ new_filter_notion <- function(property = character(),
                               condition = list()) {
   vec_assert(property, ptype = character())
   vec_assert(type, ptype = character())
-  #assertive.properties::assert_all_are_same_length(property, type, list(...))
-  #cat(length(list(...)), "Wow")
+  # assertive.properties::assert_all_are_same_length(property, type, list(...))
+  # cat(length(list(...)), "Wow")
   # condition = list(...)
   vec_assert(condition, ptype = list())
   # print(property)
@@ -133,29 +119,28 @@ filter_notion <- function(property = character(),
                           type = character(),
                           ...,
                           condition = list()) {
-
   tmp_condition <- list(...)
   # Casting Character
   c(property, type) %<-%
     vec_cast_common(property, type, .to = character())
 
-  if(length(condition) == 0 &
-     length(property) != 0 &
-     length(type) != 0) {
+  if (length(condition) == 0 &
+    length(property) != 0 &
+    length(type) != 0) {
     condition <- tmp_condition
   }
-  else if(!is.list(condition) & purrr::vec_depth(condition) == 1) {
+  else if (!is.list(condition) & purrr::vec_depth(condition) == 1) {
     condition <- list(condition)
-  } else if(!is.list(condition)) condition <- as.list(condition)
+  } else if (!is.list(condition)) condition <- as.list(condition)
 
-  #print(list(A = property, B = type, C = tmp_condition, D = condition))
+  # print(list(A = property, B = type, C = tmp_condition, D = condition))
 
   # Check for r
   c(property, type, condition) %<-%
     vec_recycle_common(property, type, condition)
 
   # Check
-  #lapply(seq_along)
+  # lapply(seq_along)
 
   # cat("3. " ,property, "|" , direction, "|" , timestamp, "\n")
   new_filter_notion(property, type, condition)
@@ -166,9 +151,11 @@ format.notion_filter <- function(x, ...) {
   property <- field(x, "property")
   condition <- field(x, "condition")
   #
-  out <- paste0("[",property,"] ",
-                 names(condition),": ",
-                 unlist(condition, use.names =  FALSE))
+  out <- paste0(
+    "[", property, "] ",
+    names(condition), ": ",
+    unlist(condition, use.names = FALSE)
+  )
   out[is.na(property)] <- NA
   out
 }
@@ -182,13 +169,13 @@ vec_ptype_full.notion_filter <- function(x, ...) "Notion_filter"
 
 
 #' OR and And
-OR <- function(...){
+OR <- function(...) {
   or <- list(...)
   tmp <- tibble::lst(or)
   return(tmp)
 }
 
-AND <- function(...){
+AND <- function(...) {
   and <- list(...)
   tmp <- tibble::lst(and)
   return(tmp)

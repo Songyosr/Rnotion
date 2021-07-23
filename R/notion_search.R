@@ -25,11 +25,10 @@
 #'
 #' @examples
 #' notion_search()
-#'
 #' @export
 notion_search <- function(query = NULL, sort = NULL, filter = NULL,
                           start_cursor = NULL, page_size = NULL,
-                          api_rate_limited = 1/3, ...) {
+                          api_rate_limited = 1 / 3, ...) {
   # Check query terms
   ## scalar
   query <- query %|null|% assertive.types::assert_is_a_string(query)
@@ -38,7 +37,7 @@ notion_search <- function(query = NULL, sort = NULL, filter = NULL,
 
   ## object
   sorts <- sort %|null|% (validate_notion_sort(sort) |> unpack_notion())
-  filters <- filter %|null|% validate_checkpoint(filter)
+  filters <- filter %|null|% (validate_filter_conditions(filter) |> unpack_notion())
 
   # Coerce argument into a list
   args <- tibble::lst(
@@ -46,17 +45,17 @@ notion_search <- function(query = NULL, sort = NULL, filter = NULL,
     start_cursor, page_size, ...
   ) |> rlist::list.clean()
 
-  #print(str(args))
-  #return(args)
+  # print(str(args))
+  # return(args)
 
-  #print(args)
+  # print(args)
   Sys.sleep(api_rate_limited)
 
-  #Result
+  # Result
   result <- httr::POST("https://api.notion.com/v1/search",
     notion_header(),
     body = jsonlite::toJSON(args, auto_unbox = TRUE),
-    encode = "raw")
+    encode = "raw"
+  )
   httr::stop_for_status(result)
-
 }
