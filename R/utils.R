@@ -41,7 +41,21 @@ validate_checkpoint <- function(x){
   x
 }
 
-un_RNO <- function(x){
-  as.list(vec_data(x))
-}
+# unpack_notion <- function(x){
+#   print(length(x))
+#   if(length(x) == 1) {
+#     unbox <- purrr::transpose(vec_data(x))
+#     return(unbox[[1]])
+#   }
+#   purrr::transpose(vec_data(x))
+#   #purrrly::by_row(vec_data(x), function(v) list(v)[[1L]], .collate = "list")$.out
+# }
 
+# unpack_a_notion <- function(x){
+#   purrr::flatten(x)
+# }
+
+unpack_notion <- function(x){
+  if(length(x) == 1) return(purrr::flatten(x))
+  else lapply(x,purrr::flatten)
+}

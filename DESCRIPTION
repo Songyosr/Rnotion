@@ -27,9 +27,9 @@ Imports:
     tibble,
     tidyr,
     utils,
-    zeallot
+    zeallot,
+    vctrs,
+    purrr
 Suggests: 
     RefManageR,
     bibtex
-Depends: 
-    vctrs

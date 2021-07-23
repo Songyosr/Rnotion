@@ -37,12 +37,12 @@ notion_search <- function(query = NULL, sort = NULL, filter = NULL,
   page_size <- page_size %|null|% (assertive.types::assert_is_a_number(page_size) |> as.integer())
 
   ## object
-  sort <- sort %|null|% (validate_notion_sort(sort, fromSearchAPI = TRUE) |> un_RNO())
-  filter <- filter %|null|% validate_checkpoint(filter)
+  sorts <- sort %|null|% (validate_notion_sort(sort) |> unpack_notion())
+  filters <- filter %|null|% validate_checkpoint(filter)
 
   # Coerce argument into a list
   args <- tibble::lst(
-    query, sort, filter,
+    query, sorts, filters,
     start_cursor, page_size, ...
   ) |> rlist::list.clean()
 

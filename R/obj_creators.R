@@ -31,3 +31,6 @@ obj_filter <- function(value = NULL,
   # Stamp and return
   parse_result(value, property)
 }
+
+
+

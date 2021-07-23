@@ -1,0 +1,102 @@
+﻿Text filter condition,,,
+,,,
+"A text filter condition applies to database properties of types ""title"", ""rich_text"", ""url"", ""email"", and ""phone"".",,,
+Property,Type,Description,Example value
+equals,string,Only return pages where the page property value matches the provided value exactly.,"""Golden Gate Bridge"""
+does_not_equal,string,Only return pages where the page property value does not match the provided value exactly.,"""Golden Gate Bridge"""
+contains,string,Only return pages where the page property value contains the provided value.,"""Bridge"""
+does_not_contain,string,Only return pages where the page property value does not contain the provided value.,"""Park"""
+starts_with,string,Only return pages where the page property value starts with the provided value.,"""Golden Gate"""
+ends_with,string,Only return pages where the page property value ends with the provided value.,"""Bridge"""
+is_empty,boolean (only true),Only return pages where the page property value is empty.,TRUE
+is_not_empty,boolean (only true),Only return pages where the page property value is present.,TRUE
+,,,
+Number filter condition,,,
+,,,
+"A number filter condition applies to database properties of type ""number"".",,,
+Property,Type,Description,Example value
+equals,number,Only return pages where the page property value matches the provided value exactly.,42
+does_not_equal,number,Only return pages where the page property value does not match the provided value exactly.,24
+greater_than,number,Only return pages where the page property value is greater than the provided value.,40
+less_than,number,Only return pages where the page property value is less than the provided value.,50
+greater_than_or_equal_to,number,Only return pages where the page property value is greater than or equal to the provided value.,42
+less_than_or_equal_to,number,Only return pages where the page property value is less than or equal to the provided value.,42
+is_empty,boolean (only true),Only return pages where the page property value is empty.,TRUE
+is_not_empty,boolean (only true),Only return pages where the page property value is present.,TRUE
+,,,
+Checkbox filter condition,,,
+,,,
+"A checkbox filter condition applies to database properties of type ""checkbox"".",,,
+Property,Type,Description,Example value
+equals,boolean,Only return pages where the page property value matches the provided value exactly.,TRUE
+does_not_equal,boolean,Only return pages where the page property value does not match the provided value exactly.,TRUE
+,,,
+Select filter condition,,,
+,,,
+"A select filter condition applies to database properties of type ""select"".",,,
+Property,Type,Description,Example value
+equals,string,Only return pages where the page property value matches the provided value exactly.,"""This Week"""
+does_not_equal,string,Only return pages where the page property value does not match the provided value exactly.,"""Backlog"""
+is_empty,boolean (only true),Only return pages where the page property value is empty.,TRUE
+is_not_empty,boolean (only true),Only return pages where the page property value is present.,TRUE
+,,,
+Multi-select filter condition,,,
+,,,
+"A multi-select filter condition applies to database properties of type ""multi_select"".",,,
+Property,Type,Description,Example value
+contains,string,Only return pages where the page property value contains the provided value.,"""Marketing"""
+does_not_contain,string,Only return pages where the page property value does not contain the provided value.,"""Engineering"""
+is_empty,boolean (only true),Only return pages where the page property value is empty.,TRUE
+is_not_empty,boolean (only true),Only return pages where the page property value is present.,TRUE
+,,,
+Date filter condition,,,
+,,,
+"A date filter condition applies to database properties of types ""date"", ""created_time"", and ""last_edited_time"".",,,
+Property,Type,Description,Example value
+equals,string (ISO 8601 date and time),Only return pages where the page property value matches the provided date exactly. Note that the comparison is done against the date. Any time information sent will be ignored.,"""2021-05-10T02:43:42Z"""
+before,string (ISO 8601 date and time),Only return pages where the page property value is before the provided date. Note that the comparison is done against the date. Any time information sent will be ignored.,"""2021-05-10T02:43:42Z"""
+after,string (ISO 8601 date and time),Only return pages where the page property value is after the provided date. Note that the comparison is done against the date. Any time information sent will be ignored.,"""2021-05-10T02:43:42Z"""
+on_or_before,string (ISO 8601 date and time),Only return pages where the page property value is on or before the provided date. Note that the comparison is done against the date. Any time information sent will be ignored.,"""2021-05-10T02:43:42Z"""
+is_empty,boolean (only true),Only return pages where the page property value is empty.,TRUE
+is_not_empty,boolean (only true),Only return pages where the page property value is present.,TRUE
+on_or_after,string (ISO 8601 date and time),Only return pages where the page property value is on or after the provided date. Note that the comparison is done against the date. Any time information sent will be ignored.,"""2021-05-10T02:43:42Z"""
+past_week,object (empty),Only return pages where the page property value is within the past week.,{}
+past_month,object (empty),Only return pages where the page property value is within the past month.,{}
+past_year,object (empty),Only return pages where the page property value is within the past year.,{}
+next_week,object (empty),Only return pages where the page property value is within the next week.,{}
+next_month,object (empty),Only return pages where the page property value is within the next month.,{}
+next_year,object (empty),Only return pages where the page property value is within the next year.,{}
+,,,
+People filter condition,,,
+,,,
+"A people filter condition applies to database properties of types ""people"", ""created_by"", and ""last_edited_by"".",,,
+Property,Type,Description,Example value
+contains,string (UUIDv4),Only return pages where the page property value contains the provided value.,"""6c574cee-ca68-41c8-86e0-1b9e992689fb"""
+does_not_contain,string (UUIDv4),Only return pages where the page property value does not contain the provided value.,"""6c574cee-ca68-41c8-86e0-1b9e992689fb"""
+is_empty,boolean (only true),Only return pages where the page property value is empty.,TRUE
+is_not_empty,boolean (only true),Only return pages where the page property value is present.,TRUE
+,,,
+Files filter condition,,,
+,,,
+"A people filter condition applies to database properties of type ""files"".",,,
+Property,Type,Description,Example value
+is_empty,boolean (only true),Only return pages where the page property value is empty.,TRUE
+is_not_empty,boolean (only true),Only return pages where the page property value is present.,TRUE
+,,,
+Relation filter condition,,,
+,,,
+"A relation filter condition applies to database properties of type ""relation"".",,,
+Property,Type,Description,Example value
+contains,string (UUIDv4),Only return pages where the page property value contains the provided value.,"""6c574cee-ca68-41c8-86e0-1b9e992689fb"""
+does_not_contain,string (UUIDv4),Only return pages where the page property value does not contain the provided value.,"""6c574cee-ca68-41c8-86e0-1b9e992689fb"""
+is_empty,boolean (only true),Only return pages where the page property value is empty.,TRUE
+is_not_empty,boolean (only true),Only return pages where the page property value is present.,TRUE
+,,,
+Formula filter condition,,,
+,,,
+"A formula filter condition applies to database properties of type ""formula"".",,,
+Property,Type,Description,
+text,object (text filter condition),"Only return pages where the result type of the page property formula is ""text"" and the provided text filter condition matches the formula's value.",
+checkbox,object (checkbox filter condition),"Only return pages where the result type of the page property formula is ""checkbox"" and the provided checkbox filter condition matches the formula's value.",
+number,object (number filter condition),"Only return pages where the result type of the page property formula is ""number"" and the provided number filter condition matches the formula's value.",
+date,object (date filter condition),"Only return pages where the result type of the page property formula is ""date"" and the provided date filter condition matches the formula's value.",
