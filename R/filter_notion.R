@@ -73,71 +73,73 @@ new_filter_notion <- function(property = character(),
   ), class = "notion_filter")
 }
 
-#' #' Notion Sort object generator
-#' #'
-#' #' @description A helper function for creating 'Sort objects' used
-#' #' by Notion API in Search and Query.
-#' #'
-#' #' @param property A character vector represented the name of the
-#' #' property to sort against. Should be omitted, when used inside
-#' #' \code{\link{notion_search}} function.
-#' #'
-#' #' @param direction A character vector represented the direction to sort.
-#' #' Either \code{"ascending"} and \code{"descending"}.
-#' #'
-#' #' @param timestamp A character vector represented The name of the timestamp
-#' #' to sort against. Either \code{"created_time"} and \code{"last_edited_time"}.
-#' #'
-#' #' @details please check:
-#' #' \url{https://developers.notion.com/reference/post-search} and
-#' #' \url{https://developers.notion.com/reference/post-database-query}
-#' #'
-#' #' @examples
-#' #'
-#' #' # Size of one
-#' #' sort_1 <- sort_notion(property = "Ingredients", direction = "descending", timestamp = "last_edited_time")
-#' #' sort_1
-#' #'
-#' #' # Size of N (all element should have an equal length or 1)
-#' #' sort_n <- sort_notion(
-#' #'   property = LETTERS[1:4],
-#' #'   direction = "ascending",
-#' #'   timestamp = rep(c("last_edited_time", "created_time"), 2)
-#' #' )
-#' #'
-#' #' # Coercing sort criteria with 'c()'
-#' #' c(sort_1, sort_n)
-#' #'
-#' #' # Omit properties when use inside notion search
-#' #' notion_search(
-#' #'   sort = sort_notion(direction = "ascending", timestamp = "last_edited_time"),
-#' #'   page_size = 4
-#' #' )
+#' Notion Filter object generator
+#'
+#' @description A helper function for creating 'Filter objects' used
+#' by Notion API in Search and Query.
+#'
+#' @param property A character vector represented the name of the
+#' property to filter on. Should only be 'object', when used inside
+#' \code{\link{notion_search}} function.
+#'
+#' @param type A character vector represented the direction to sort.
+#' Either \code{"ascending"} and \code{"descending"}.
+#'
+#' @param timestamp A character vector represented The name of the timestamp
+#' to sort against. Either \code{"created_time"} and \code{"last_edited_time"}.
+#'
+#' @details please check:
+#' \url{https://developers.notion.com/reference/post-search} and
+#' \url{https://developers.notion.com/reference/post-database-query}
+#'
+#' @examples
+#'
+#' # Size of one
+#' sort_1 <- sort_notion(property = "Ingredients", direction = "descending", timestamp = "last_edited_time")
+#' sort_1
+#'
+#' # Size of N (all element should have an equal length or 1)
+#' sort_n <- sort_notion(
+#'   property = LETTERS[1:4],
+#'   direction = "ascending",
+#'   timestamp = rep(c("last_edited_time", "created_time"), 2)
+#' )
+#'
+#' # Coercing sort criteria with 'c()'
+#' c(sort_1, sort_n)
+#'
+#' # Omit properties when use inside notion search
+#' notion_search(
+#'   sort = sort_notion(direction = "ascending", timestamp = "last_edited_time"),
+#'   page_size = 4
+#' )
 #'
 #' @export
 filter_notion <- function(property = character(),
                           type = character(),
                           ...,
-                          condition = list()) {
+                          condition = list(),
+                          .CallfromSearch = false) {
   tmp_condition <- list(...)
   # Casting Character
   c(property, type) %<-%
     vec_cast_common(property, type, .to = character())
 
   if (length(condition) == 0 &
-    length(property) != 0 &
-    length(type) != 0) {
+    length(property) != 0) {
     condition <- tmp_condition
   }
   else if (!is.list(condition) & purrr::vec_depth(condition) == 1) {
     condition <- list(condition)
   } else if (!is.list(condition)) condition <- as.list(condition)
 
-  # print(list(A = property, B = type, C = tmp_condition, D = condition))
+  #print(list(A = property, B = type, C = tmp_condition, D = condition))
 
   # Check for r
   c(property, type, condition) %<-%
     vec_recycle_common(property, type, condition)
+
+
 
   # Check
   # lapply(seq_along)
@@ -170,13 +172,9 @@ vec_ptype_full.notion_filter <- function(x, ...) "Notion_filter"
 
 #' OR and And
 OR <- function(...) {
-  or <- list(...)
-  tmp <- tibble::lst(or)
-  return(tmp)
+  list(or = list(...))
 }
 
 AND <- function(...) {
-  and <- list(...)
-  tmp <- tibble::lst(and)
-  return(tmp)
+  list(and = list(...))
 }
