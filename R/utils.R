@@ -56,6 +56,30 @@ validate_checkpoint <- function(x){
 # }
 
 unpack_notion <- function(x){
-  if(length(x) == 1) return(purrr::flatten(x))
+  #print("we are here1")
+  if(length(x) == 1) {
+    #print("we are here2")
+    tmp <- purrr::flatten(x)
+    if(assertive.types::is_inherited_from(x, "notion_sort") &
+       tmp$property == "*Search_API"){
+      #print("we are here3")
+      tmp$property <- NULL
+    }
+    return(tmp)
+  }
+
   else lapply(x,purrr::flatten)
+}
+
+wrap <- function(...) {
+  tibble::lst(...)
+}
+
+# Wrapper function
+a_wrap <- \(x, .names = "sort"){
+  list(unpack_notion(x)) |>
+    (\(x, nm){
+      names(x)[1] <- nm
+      return(x)
+    })(nm = .names)
 }

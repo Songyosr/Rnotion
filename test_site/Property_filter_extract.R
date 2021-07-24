@@ -14,6 +14,7 @@ fdt <- fdt |>
   tidyr::fill(group) |>
   dplyr::filter(!is.na(Type) & Type != "" &  Type != "Type") |>
   dplyr::select(group, Property) |>
-  dplyr::mutate()
+  dplyr::mutate()|>
+  dplyr::add_row(group = "object", Property = "value")
 
 write.csv(fdt,"data/property_filter_reference.csv")

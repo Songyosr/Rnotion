@@ -50,6 +50,7 @@ notion_search <- function(query = NULL, sort = NULL, filter = NULL,
 
   # print(args)
   Sys.sleep(api_rate_limited)
+  print(jsonlite::toJSON(args, auto_unbox = TRUE, pretty = T))
 
   # Result
   result <- httr::POST("https://api.notion.com/v1/search",
