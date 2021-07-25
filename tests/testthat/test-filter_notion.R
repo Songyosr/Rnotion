@@ -16,15 +16,7 @@ test_that("filter object works in a 'search API'", {
     filter_notion(
       property = "object",
       value = "database"
-    ) |> a_wrap(),
-    test_case1
-  )
-  expect_equal(
-    sort_notion(
-      property = NULL,
-      direction = "ascending",
-      timestamp = "last_edited_time"
-    ) |> a_wrap(),
+    ) |> a_wrap("filter"),
     test_case1
   )
 })

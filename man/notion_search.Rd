@@ -42,5 +42,4 @@ please check: \url{https://developers.notion.com/reference/post-search}
 }
 \examples{
 notion_search()
-
 }

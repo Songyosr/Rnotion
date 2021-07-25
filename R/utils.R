@@ -20,26 +20,26 @@
 # class(x) <- "NULL"
 # str(x)
 
-add_checkpoint <- function(x, clean_null = TRUE){
-  attr(x, "notion_check") <- TRUE
-  if(clean_null) return(rlist::list.clean(x))
-  else x
-}
+# add_checkpoint <- function(x, clean_null = TRUE){
+#   attr(x, "notion_check") <- TRUE
+#   if(clean_null) return(rlist::list.clean(x))
+#   else x
+# }
+#
+# parse_result <- function(... , clean_null = TRUE){
+#   x <- tibble::lst(...)
+#   attr(x, "notion_check") <- TRUE
+#   if(clean_null) return(rlist::list.clean(x))
+#   else x
+# }
 
-parse_result <- function(... , clean_null = TRUE){
-  x <- tibble::lst(...)
-  attr(x, "notion_check") <- TRUE
-  if(clean_null) return(rlist::list.clean(x))
-  else x
-}
 
-
-validate_checkpoint <- function(x){
-  if(is.null(attr(x, "notion_check"))){
-    warning("Please use obj_*** functions to create a complex JSON argurments \n to ensure the correctness")
-  }
-  x
-}
+# validate_checkpoint <- function(x){
+#   if(is.null(attr(x, "notion_check"))){
+#     warning("Please use obj_*** functions to create a complex JSON argurments \n to ensure the correctness")
+#   }
+#   x
+# }
 
 # unpack_notion <- function(x){
 #   print(length(x))
@@ -64,7 +64,11 @@ unpack_notion <- function(x){
        tmp$property == "*Search_API"){
       #print("we are here3")
       tmp$property <- NULL
+    } else if(assertive.types::is_inherited_from(x, "notion_filter") &
+              tmp$type == "*Search_API"){
+      tmp$type <- NULL
     }
+
     return(tmp)
   }
 

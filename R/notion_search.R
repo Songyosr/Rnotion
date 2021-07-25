@@ -45,12 +45,8 @@ notion_search <- function(query = NULL, sort = NULL, filter = NULL,
     start_cursor, page_size, ...
   ) |> rlist::list.clean()
 
-  # print(str(args))
-  # return(args)
-
-  # print(args)
   Sys.sleep(api_rate_limited)
-  print(jsonlite::toJSON(args, auto_unbox = TRUE, pretty = T))
+  #print(jsonlite::toJSON(args, auto_unbox = TRUE, pretty = T))
 
   # Result
   result <- httr::POST("https://api.notion.com/v1/search",

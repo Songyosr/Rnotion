@@ -125,6 +125,8 @@ filter_notion <- function(property = character(),
   c(property, type) %<-%
     vec_cast_common(property, type, .to = character())
 
+
+  # Pack condition input
   if (length(condition) == 0 &
     length(property) != 0) {
     condition <- tmp_condition
@@ -134,6 +136,15 @@ filter_notion <- function(property = character(),
   } else if (!is.list(condition)) condition <- as.list(condition)
 
   #print(list(A = property, B = type, C = tmp_condition, D = condition))
+
+  ## Auto fill for search API
+  if(length(property) == 1 &
+     length(type) == 0 &
+     length(condition) == 1
+  ) {
+    type <- c("*Search_API")
+  }
+
 
   # Check for r
   c(property, type, condition) %<-%
