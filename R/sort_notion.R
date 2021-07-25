@@ -73,10 +73,16 @@ sort_notion <- function(property = character(),
     vec_cast_common(property, direction, timestamp, .to = character())
   #print(paste(length(property), direction, timestamp, sep = " | "))
 
-  if(length(property) == 0) property <- c(" ")
+  # Exceptional case for search api
+  if(length(property) == 0 &
+     length(direction) == 1 &
+     length(timestamp) == 1
+     ) {
+    property <- c("*Search_API")
+  }
 
   # Check for range 0
-    vec_recycle_common(property, direction, timestamp)
+  vec_recycle_common(property, direction, timestamp)
 
   # cat("3. " ,property, "|" , direction, "|" , timestamp, "\n")
 
@@ -86,9 +92,7 @@ sort_notion <- function(property = character(),
 
 # Sort Validators
 #' @export
-validate_notion_sort <- function(x, fromSearchAPI = FALSE,
-                                 severity = "warning",
-                                 prepare_toJSON = FALSE) {
+validate_notion_sort <- function(x, fromSearchAPI = FALSE ) {
   if (tmp <- !assertive.types::is_inherited_from(x, "notion_sort")) {
     warning(
       attr(tmp, "cause"),
@@ -114,8 +118,6 @@ validate_notion_sort <- function(x, fromSearchAPI = FALSE,
   assertive.base::assert_all_are_true(
     direction %in% c("ascending", "descending")
   )
-  #if(prepare_toJSON) return(vec_data(x))
-  #else return(x)
   x
 }
 

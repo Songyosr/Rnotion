@@ -14,7 +14,7 @@
 #'
 set_notion_token <- function(token = NULL){
   key <- token %||% readline(prompt = "Enter your Notion API Key: ")
-  text <- paste0("Notion_token=", key, "\n")
+  text <- paste0("notion_api_key=", key, "\n")
   env <- Sys.getenv("notion_api_key")
   if (!file.exists(file.path(normalizePath("~/"), ".Renviron"))){
     file.create(file.path(normalizePath("~/"), ".Renviron"), showWarnings = TRUE)
