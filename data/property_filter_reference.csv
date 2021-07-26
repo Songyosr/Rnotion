@@ -1,4 +1,4 @@
-"","group","Property"
+"","Type","Property"
 "1","text","equals"
 "2","text","does_not_equal"
 "3","text","contains"
@@ -52,4 +52,4 @@
 "51","formula","checkbox"
 "52","formula","number"
 "53","formula","date"
-"54","object","value"
+"54","*Search_API","value"
