@@ -87,3 +87,9 @@ a_wrap <- \(x, .names = "sort"){
       return(x)
     })(nm = .names)
 }
+
+info <- function(...) {
+  header <- crayon::cyan("[i]" )
+  body <- crayon::silver(...)
+  cat(header, body)
+}

@@ -34,7 +34,7 @@ notion_get_database <- function(database_id = NULL,
   Sys.sleep(api_rate_limited)
 
   #Result
-  result <- httr::GET(url, notion_header())
+  result <- httr::POST(url, notion_header())
   httr::stop_for_status(result)
 }
 
