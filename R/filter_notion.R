@@ -14,20 +14,20 @@ filter_ref <- read.csv("data/property_filter_reference.csv")
 
 validate_a_filter_condition <- \(property, type, condition) {
   assertive.properties::assert_is_scalar(condition)
-  filter_ref <- filter_ref[filter_ref$group == type, "Property"]
+  filter_ref <- filter_ref[filter_ref$Type == type, "Property"]
   inside_list <- names(condition)
   check <- names(condition) %in% filter_ref
   if (!check) {
     stop(
-      "Property '", names(condition[!check]),
-      "' does not exists filter type['", type, "']",
+      "Conditional property '", names(condition[!check]),
+      "' does not exists filter type ['", type, "']",
       "\n [i] Please review: \nhttps://developers.notion.com/reference/post-database-query#post-database-query-filter"
     )
   }
   # x
 }
 
-validate_filter_conditions <- \(x, un_RNO = FALSE) {
+validate_filter_conditions <- \(x, fromSearchAPI = FALSE ) {
 
   # check overall class
   if (tmp <- !assertive.types::is_inherited_from(x, "notion_filter")) {

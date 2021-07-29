@@ -4,6 +4,9 @@
 # Rnotion
 
 <!-- badges: start -->
+
+<img src="icon/imgfile.png" width="172"/>
+
 <!-- badges: end -->
 
 The goal of Rnotion is to bridge R to [Notion](notion.so)’s beta

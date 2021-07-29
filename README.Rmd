@@ -64,7 +64,7 @@ library(Rnotion)
 set_notion_token(token = ....YOUR_TOKEN_HERE...)
 ```
 
-```{r cars}
+```{r cars, eval=FALSE, include=FALSE}
 notion_get_user()
 notion_get_database()
 ```
